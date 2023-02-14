@@ -18,6 +18,9 @@
 		687BD9FA299AAC7C00FDF14B /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687BD9F9299AAC7C00FDF14B /* APIManager.swift */; };
 		687BD9FC299AACA700FDF14B /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687BD9FB299AACA700FDF14B /* PersistenceManager.swift */; };
 		687BD9FE299AACC000FDF14B /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687BD9FD299AACC000FDF14B /* HapticsManager.swift */; };
+		687BDA00299B94CA00FDF14B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687BD9FF299B94CA00FDF14B /* Extensions.swift */; };
+		687BDA02299BAFA600FDF14B /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687BDA01299BAFA600FDF14B /* SearchResultTableViewCell.swift */; };
+		687BDA04299BC95600FDF14B /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687BDA03299BC95600FDF14B /* SearchResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,9 @@
 		687BD9F9299AAC7C00FDF14B /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		687BD9FB299AACA700FDF14B /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		687BD9FD299AACC000FDF14B /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
+		687BD9FF299B94CA00FDF14B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		687BDA01299BAFA600FDF14B /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
+		687BDA03299BC95600FDF14B /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +77,6 @@
 				687BD9F0299AA0AB00FDF14B /* Models */,
 				687BD9EF299AA0A300FDF14B /* Views */,
 				687BD9EE299AA09500FDF14B /* Controllers */,
-				687BD9E5299AA02100FDF14B /* LaunchScreen.storyboard */,
 			);
 			path = KStocks;
 			sourceTree = "<group>";
@@ -90,6 +95,8 @@
 		687BD9EF299AA0A300FDF14B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				687BD9E5299AA02100FDF14B /* LaunchScreen.storyboard */,
+				687BDA01299BAFA600FDF14B /* SearchResultTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -97,6 +104,7 @@
 		687BD9F0299AA0AB00FDF14B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				687BDA03299BC95600FDF14B /* SearchResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -118,6 +126,7 @@
 				687BD9E3299AA02100FDF14B /* Assets.xcassets */,
 				687BD9DA299AA02000FDF14B /* AppDelegate.swift */,
 				687BD9DC299AA02000FDF14B /* SceneDelegate.swift */,
+				687BD9FF299B94CA00FDF14B /* Extensions.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -193,11 +202,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				687BD9FE299AACC000FDF14B /* HapticsManager.swift in Sources */,
+				687BDA02299BAFA600FDF14B /* SearchResultTableViewCell.swift in Sources */,
 				687BD9F8299AA25700FDF14B /* StockDetailViewController.swift in Sources */,
 				687BD9DF299AA02000FDF14B /* WatchListViewController.swift in Sources */,
 				687BD9F4299AA22100FDF14B /* TopStoriesNewsViewController.swift in Sources */,
 				687BD9FC299AACA700FDF14B /* PersistenceManager.swift in Sources */,
+				687BDA00299B94CA00FDF14B /* Extensions.swift in Sources */,
 				687BD9DB299AA02000FDF14B /* AppDelegate.swift in Sources */,
+				687BDA04299BC95600FDF14B /* SearchResponse.swift in Sources */,
 				687BD9DD299AA02000FDF14B /* SceneDelegate.swift in Sources */,
 				687BD9F6299AA24000FDF14B /* SearchResultsViewController.swift in Sources */,
 				687BD9FA299AAC7C00FDF14B /* APIManager.swift in Sources */,

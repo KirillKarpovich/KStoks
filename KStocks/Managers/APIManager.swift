@@ -11,13 +11,24 @@ final class APIManager {
     static let shared = APIManager()
     
     private struct Constants {
-        static let apiKey = ""
+        static let apiKey = "cflo599r01qjfr8f2dj0cflo599r01qjfr8f2djg"
         static let sandboxApiKey = ""
-        static let baseUrl = ""
+        static let baseUrl = "https://finnhub.io/api/v1/"
     }
     
     private init() {}
-  
+    
+    public func search(
+        query: String,
+        completion: @escaping (Result<SearchResponse, Error>) -> Void
+    ) {
+       request(
+        url: url(
+            for: .search,
+            queryParams: ["q":query]
+    ),
+        expecting: SearchResponse.self, completion: completion)
+    }
     
     private enum Endpoint: String {
         case search
@@ -32,7 +43,22 @@ final class APIManager {
         for endpoint: Endpoint,
         queryParams: [String:String] = [:]
     ) -> URL? {
-        return nil
+        var urlString = Constants.baseUrl + endpoint.rawValue
+        
+        var queryItems = [URLQueryItem]()
+        // Add any parametrs
+        for (name, value) in queryParams {
+            queryItems.append(.init(name: name, value: value))
+        }
+        //Add token
+        queryItems.append(.init(name: "token", value: Constants.apiKey))
+        
+        // Convert query items to suffix string
+        let queryString = queryItems.map { "\($0.name)=\($0.value ?? "")" }.joined(separator: "&")
+        
+        urlString += "?" + queryString
+        print("\n\(urlString)\n")
+        return URL(string: urlString)
     }
     
     private func request<T: Codable>(

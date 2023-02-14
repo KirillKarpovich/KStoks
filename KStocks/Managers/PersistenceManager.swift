@@ -27,6 +27,5 @@ final class PersistenceManager {
     }
     
     public func removeFromWatchlist() {
-//        print("Test")
     }
 }
