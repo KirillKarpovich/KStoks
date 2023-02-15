@@ -20,6 +20,7 @@ class SearchResultsViewController: UIViewController {
     private let tableView: UITableView = {
         let table = UITableView()
         table.register(SearchResultTableViewCell.self, forCellReuseIdentifier: SearchResultTableViewCell.identifier)
+        table.isHidden = true
         return table
     }()
 
@@ -42,6 +43,7 @@ class SearchResultsViewController: UIViewController {
     
     public func update(with results: [SearchResult]) {
         self.results = results
+        tableView.isHidden = results.isEmpty
         tableView.reloadData()
     }
 
@@ -66,7 +68,6 @@ extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let result = results[indexPath.row]
-
         delegate?.SearchResultsViewControllerDidSelect(searchResult: result)
     }
 }

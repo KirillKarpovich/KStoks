@@ -6,17 +6,31 @@
 //
 
 import UIKit
+import FloatingPanel
 
 class WatchListViewController: UIViewController {
     
     private var searchTimer: Timer?
+    
+    private var panel: FloatingPanelController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupSearchController()
+        setupFloationgPanel()
         setupTitleView()
     }
+    
+    private func setupFloationgPanel() {
+        let vc = TopStoriesNewsViewController()
+        let panel = FloatingPanelController()
+        panel.surfaceView.backgroundColor = .secondarySystemBackground
+        panel.addPanel(toParent: self)
+        panel.delegate = self
+        panel.track(scrollView: vc.tableView)
+    }
+    
     
     private func setupTitleView() {
         let titleView = UIView(
@@ -40,7 +54,6 @@ class WatchListViewController: UIViewController {
         let searchVC = UISearchController(searchResultsController: resultVC)
         searchVC.searchResultsUpdater = self
         navigationItem.searchController = searchVC
-        
     }
 }
 
@@ -60,6 +73,9 @@ extension WatchListViewController: UISearchResultsUpdating {
                         resultVC.update(with: response.result)
                     }
                 case .failure(let error):
+                    DispatchQueue.main.async {
+                        resultVC.update(with: [])
+                    }
                     print(error.localizedDescription)
                 }
             }
@@ -69,7 +85,16 @@ extension WatchListViewController: UISearchResultsUpdating {
 
 extension WatchListViewController: SearchResultsViewControllerDelegate {
     func SearchResultsViewControllerDidSelect(searchResult: SearchResult) {
-        print("Did select \(searchResult)")
+        navigationItem.searchController?.searchBar.resignFirstResponder()
+        let vc = StockDetailViewController()
+        let navVC = UINavigationController(rootViewController: vc)
+        vc.title = searchResult.description
+        present(navVC, animated: true)
     }
 }
 
+extension WatchListViewController: FloatingPanelControllerDelegate {
+    func floatingPanelDidChangeState(_ fpc: FloatingPanelController) {
+        navigationItem.titleView?.isHidden = fpc.state == .full
+    }
+}

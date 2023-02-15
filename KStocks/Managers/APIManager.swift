@@ -22,12 +22,17 @@ final class APIManager {
         query: String,
         completion: @escaping (Result<SearchResponse, Error>) -> Void
     ) {
-       request(
-        url: url(
-            for: .search,
-            queryParams: ["q":query]
-    ),
-        expecting: SearchResponse.self, completion: completion)
+        guard let safeQuery = query.addingPercentEncoding(
+            withAllowedCharacters: .urlQueryAllowed
+        ) else {
+            return
+        }
+        request(
+            url: url(
+                for: .search,
+                queryParams: ["q":safeQuery]
+            ),
+            expecting: SearchResponse.self, completion: completion)
     }
     
     private enum Endpoint: String {
