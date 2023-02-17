@@ -27,6 +27,7 @@ class WatchListViewController: UIViewController {
         let panel = FloatingPanelController()
         panel.surfaceView.backgroundColor = .secondarySystemBackground
         panel.addPanel(toParent: self)
+        panel.set(contentViewController: vc)
         panel.delegate = self
         panel.track(scrollView: vc.tableView)
     }

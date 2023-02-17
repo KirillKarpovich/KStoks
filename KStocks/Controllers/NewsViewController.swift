@@ -8,17 +8,7 @@
 import UIKit
 
 class NewsViewController: UIViewController {
-
-    let tableView: UITableView = {
-        let table = UITableView()
-        table.backgroundColor = .purple
-        table.register(NewsHeaderView.self,
-                       forHeaderFooterViewReuseIdentifier: NewsHeaderView.identifier)
-        return table
-    }()
-    
-    private let type: Type
-    
+        
     enum `Type` {
         case topStories
         case company(symbol: String)
@@ -33,6 +23,23 @@ class NewsViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: - Properties
+    
+    private var stories: [NewsStory] = [
+    NewsStory(category: "Tech", datetime: 123, headline: "Some headline going here biiiitch", id: 33, image: "Img", related: "dw", source: "Source", summary: "summary", url: "URL")
+    ]
+    private let type: Type
+
+    let tableView: UITableView = {
+        let table = UITableView()
+        table.backgroundColor = .secondarySystemBackground
+        table.register(NewsHeaderView.self,
+                       forHeaderFooterViewReuseIdentifier: NewsHeaderView.identifier)
+        table.register(NewsStoryTableViewCell.self,
+                       forCellReuseIdentifier: NewsStoryTableViewCell.identifier)
+        return table
+    }()
     
     init(type: Type) {
         self.type = type
@@ -75,21 +82,31 @@ class NewsViewController: UIViewController {
 
 extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        stories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: NewsStoryTableViewCell.identifier,
+            for: indexPath
+        ) as? NewsStoryTableViewCell else { fatalError() }
+        
+        cell.configure(with: .init(model: stories[indexPath.row]))
+        return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: NewsHeaderView.identifier) as? NewsHeaderView else { return nil }
-        header.configure(with: .init(title: "Test", shouldShowAddButton: false))
+//        header.configure(with: .init(
+        header.configure(with: NewsHeaderView.ViewModel(
+            title: self.type.title,
+            shouldShowAddButton: false
+        ))
         return header
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        140
+        NewsStoryTableViewCell.preferedHeight
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
