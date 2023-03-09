@@ -13,9 +13,7 @@ final class HapticsManager {
     
     private init() {}
     
-    
     private func vibrateForSelection() {
         
     }
-    
 }

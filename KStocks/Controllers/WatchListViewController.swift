@@ -12,14 +12,65 @@ class WatchListViewController: UIViewController {
     
     private var searchTimer: Timer?
     
+    private var watchListMap: [String:[CandleStick]] = [:]
+    
+    private var viewModels: [WatchListTableViewCell.ViewModel] = []
+    
     private var panel: FloatingPanelController?
+    private let tableView: UITableView = {
+        let table = UITableView()
+        
+        return table
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupSearchController()
+        setupTableView()
+        fetchWatchlistData()
         setupFloationgPanel()
         setupTitleView()
+    }
+    
+    //MARK: - Private
+    
+    private func setupTableView() {
+        view.addSubview(tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    private func fetchWatchlistData() {
+        let symbols = PersistenceManager.shared.watchlist
+        
+        let group = DispatchGroup()
+        
+        for symbol in symbols {
+            group.enter()
+            
+            APIManager.shared.marketData(for: symbol) { [weak self] result in
+                defer {
+                    group.leave()
+                }
+                switch result {
+                case .success(let data):
+                    let candleSticks = data.candleSticks
+                    self?.watchListMap[symbol] = candleSticks
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
+        group.notify(queue: .main) { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+    
+    private func getLatestClosingPrice(from data: [CandleStick]) -> String {
+        guard let closingPrice = data.first?.close else { return "" }
+        
+        return "\(closingPrice)"
     }
     
     private func setupFloationgPanel() {
@@ -31,7 +82,6 @@ class WatchListViewController: UIViewController {
         panel.delegate = self
         panel.track(scrollView: vc.tableView)
     }
-    
     
     private func setupTitleView() {
         let titleView = UIView(
@@ -97,5 +147,20 @@ extension WatchListViewController: SearchResultsViewControllerDelegate {
 extension WatchListViewController: FloatingPanelControllerDelegate {
     func floatingPanelDidChangeState(_ fpc: FloatingPanelController) {
         navigationItem.titleView?.isHidden = fpc.state == .full
+    }
+}
+
+extension WatchListViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        watchListMap.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
     }
 }

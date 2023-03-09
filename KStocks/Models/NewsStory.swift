@@ -17,5 +17,4 @@ struct NewsStory: Codable {
     let source: String
     let summary: String
     let url: String
-    
 }

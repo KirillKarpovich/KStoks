@@ -13,5 +13,4 @@ class StockDetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
     }
-
 }

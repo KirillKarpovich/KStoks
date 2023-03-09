@@ -115,5 +115,4 @@ class NewsStoryTableViewCell: UITableViewCell {
         dateLabel.text = viewModel.dateString
         storyImageView.setImage(with: viewModel.imageURL)
     }
-    
 }

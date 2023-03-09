@@ -88,7 +88,6 @@ class NewsViewController: UIViewController {
         let vc = SFSafariViewController(url: url)
         present(vc, animated: true)
     }
-
 }
 
 extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
